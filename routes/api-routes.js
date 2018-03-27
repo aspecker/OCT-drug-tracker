@@ -2,15 +2,10 @@
 // https://api.fda.gov/drug/label.json?search=openfda.product_type:otc+AND+
 const db = require("../models");
 const passport = require("../config/passport");
+const axios = require("axios");
 
 module.exports = function(app) {
 	
-	app.post("/api/search", (req, res) => {
-
-		db.Med.findAll({}).then(results => {
-			res.json(results);
-		})
-	});
 	app.get('/search/:searchTerm?', (req, res)=>{
 		let searchTerm = req.params.searchTerm;
 		if (searchTerm) {
@@ -22,12 +17,12 @@ module.exports = function(app) {
 					let brandName = obj[key].openfda.brand_name[0];
 					let genericName = obj[key].openfda.generic_name[0];
 					let route = obj[key].openfda.route[0];
-					let whenUsing = obj[key].when_using[0];
+					// let whenUsing = obj[key].when_using[0];
 					let purpose = obj[key].purpose[0];
 					let doseAdmin = obj[key].dosage_and_administration[0];
 					let activeIngredient = obj[key].active_ingredient[0];
 					let question = obj[key].questions[0];
-					parsedData.push([brandName, genericName, route, whenUsing, purpose, doseAdmin, activeIngredient, question]);
+					parsedData.push([brandName, genericName, route, purpose, doseAdmin, activeIngredient, question]);
 				});
 				console.log(parsedData);
 				res.render("../views/search.handlebars", {parsedData: parsedData});
