@@ -4,6 +4,7 @@
   "description": "over the counter drug tracker",
   "main": "server.js",
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
